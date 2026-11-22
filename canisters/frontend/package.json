@@ -1,0 +1,35 @@
+{
+  "name": "starquest-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build && node scripts/csp-hashes.mjs",
+    "typecheck": "react-router typegen && tsc",
+    "test:e2e": "sh -c 'for f in tests/e2e/*.e2e.mjs; do node \"$f\" \"$@\" || exit 1; done' sh",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource/nunito": "^5.3.0",
+    "@icp-sdk/auth": "^11.2.0",
+    "@icp-sdk/core": "^6.1.1",
+    "framer-motion": "^14.14.0",
+    "i18next": "^27.2.2",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-i18next": "^18.0.3",
+    "react-router": "^8.5.2"
+  },
+  "devDependencies": {
+    "@icp-sdk/bindgen": "^0.4.1",
+    "@react-router/dev": "^8.5.2",
+    "@types/node": "^22.0.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "5.1.0"
+  }
+}

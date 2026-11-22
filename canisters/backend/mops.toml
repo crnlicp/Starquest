@@ -1,0 +1,15 @@
+[canisters.backend]
+main = "src/main.mo"
+candid = "src/backend.did"
+
+[dependencies]
+core = "2.7.0"
+sha2 = "0.3.2"
+
+[toolchain]
+moc = "2.2.4"
+lintoko = "0.12.0"
+
+[canisters.backend.migrations]
+chain = "src/migrations"
+check-limit = 1

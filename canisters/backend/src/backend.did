@@ -1,0 +1,615 @@
+type WeeklySummary = 
+ record {
+   childId: ChildId;
+   earned: nat;
+   fromDay: int;
+   goodCount: nat;
+   name: text;
+   oopsCount: nat;
+   toDay: int;
+   topBehavior: opt BehaviorCount;
+ };
+type Unlock = 
+ variant {
+   badge: BadgeId;
+   free;
+   level: nat;
+ };
+type Time = int;
+type StarterBehavior = 
+ record {
+   emoji: text;
+   key: text;
+   kind: BehaviorKind;
+   mission: opt Mission;
+   name: text;
+   points: nat;
+ };
+type Settings = 
+ record {
+   animation: AnimationLevel;
+   dailyGoalDefault: nat;
+   language: Language;
+   reminderMinute: opt nat;
+   showLeaderboard: bool;
+   soundOn: bool;
+   tzOffsetMinutes: int;
+ };
+type Role = 
+ variant {
+   device: record {
+             childId: ChildId;
+             familyId: FamilyId;
+           };
+   none;
+   parent: record {
+             familyId: FamilyId;
+             kind: ParentKind;
+           };
+ };
+type RewardRequest = 
+ record {
+   childId: ChildId;
+   cost: nat;
+   createdAt: Time;
+   createdBy: principal;
+   decidedAt: opt Time;
+   decidedBy: opt principal;
+   emoji: text;
+   familyId: FamilyId;
+   id: RequestId;
+   logId: opt LogId;
+   rewardId: RewardId;
+   status: RequestStatus;
+   title: text;
+   updatedAt: Time;
+ };
+type RewardInput = 
+ record {
+   cost: nat;
+   emoji: text;
+   image: ImageChange;
+   name: text;
+ };
+type RewardId = nat;
+type Reward = 
+ record {
+   cost: nat;
+   createdAt: Time;
+   emoji: text;
+   enabled: bool;
+   familyId: FamilyId;
+   hasImage: bool;
+   id: RewardId;
+   name: text;
+   updatedAt: Time;
+ };
+type Result_9 = 
+ variant {
+   err: Error;
+   ok: vec Reward;
+ };
+type Result_8 = 
+ variant {
+   err: Error;
+   ok: LogResult;
+ };
+type Result_7 = 
+ variant {
+   err: Error;
+   ok: PairedDevice;
+ };
+type Result_6 = 
+ variant {
+   err: Error;
+   ok: RewardRequest;
+ };
+type Result_5 = 
+ variant {
+   err: Error;
+   ok: MissionTask;
+ };
+type Result_4 = 
+ variant {
+   err: Error;
+   ok: Behavior;
+ };
+type Result_3 = 
+ variant {
+   err: Error;
+   ok: ChildView;
+ };
+type Result_26 = 
+ variant {
+   err: Error;
+   ok: InviteView;
+ };
+type Result_25 = 
+ variant {
+   err: Error;
+   ok: PairingView;
+ };
+type Result_24 = 
+ variant {
+   err: Error;
+   ok: Decision;
+ };
+type Result_23 = 
+ variant {
+   err: Error;
+   ok: Changes;
+ };
+type Result_22 = 
+ variant {
+   err: Error;
+   ok: ChildStats;
+ };
+type Result_21 = 
+ variant {
+   err: Error;
+   ok: HistoryPage;
+ };
+type Result_20 = 
+ variant {
+   err: Error;
+   ok: FamilyView;
+ };
+type Result_2 = 
+ variant {
+   err: Error;
+   ok: Reward;
+ };
+type Result_19 = 
+ variant {
+   err: Error;
+   ok: opt blob;
+ };
+type Result_18 = 
+ variant {
+   err: Error;
+   ok: WeeklySummary;
+ };
+type Result_17 = 
+ variant {
+   err: Error;
+   ok: vec MissionTask;
+ };
+type Result_16 = 
+ variant {
+   err: Error;
+   ok: vec AvatarItemView;
+ };
+type Result_15 = 
+ variant {
+   err: Error;
+   ok: vec Behavior;
+ };
+type Result_14 = 
+ variant {
+   err: Error;
+   ok: vec ChildBadge;
+ };
+type Result_13 = 
+ variant {
+   err: Error;
+   ok: vec ChildView;
+ };
+type Result_12 = 
+ variant {
+   err: Error;
+   ok: vec PairedDevice;
+ };
+type Result_11 = 
+ variant {
+   err: Error;
+   ok: vec Parent;
+ };
+type Result_10 = 
+ variant {
+   err: Error;
+   ok: vec RewardRequest;
+ };
+type Result_1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ variant {
+   err: Error;
+   ok: bool;
+ };
+type RequestStatus = 
+ variant {
+   approved;
+   declined;
+   pending;
+ };
+type RequestId = nat;
+type Range = 
+ variant {
+   month;
+   today;
+   week;
+   year;
+ };
+type ParentKind = 
+ variant {
+   caregiver;
+   owner;
+ };
+type Parent = 
+ record {
+   familyId: FamilyId;
+   joinedAt: Time;
+   kind: ParentKind;
+   "principal": principal;
+ };
+type PairingView = 
+ record {
+   childId: ChildId;
+   code: text;
+   expiresAt: Time;
+   url: text;
+ };
+type PairedDevice = 
+ record {
+   childId: ChildId;
+   familyId: FamilyId;
+   lastActive: Time;
+   name: text;
+   pairedAt: Time;
+   "principal": principal;
+ };
+type MissionTask = 
+ record {
+   childId: ChildId;
+   createdAt: Time;
+   entryId: LogId;
+   familyId: FamilyId;
+   id: MissionId;
+   logId: opt LogId;
+   refund: nat;
+   status: MissionStatus;
+   suggestion: text;
+   updatedAt: Time;
+ };
+type MissionStatus = 
+ variant {
+   active;
+   cancelled;
+   completed;
+ };
+type MissionId = nat;
+type Mission = 
+ record {
+   refund: nat;
+   suggestion: text;
+ };
+type LogResult = 
+ record {
+   dayPoints: nat;
+   entry: LogEntry;
+   goalReached: bool;
+   leveledUp: opt Level;
+   newBadges: vec BadgeId;
+   newBalance: nat;
+   newXp: nat;
+   streak: nat;
+ };
+type LogKind = 
+ variant {
+   behavior;
+   custom;
+   mission;
+   reset;
+   reward;
+ };
+type LogId = nat;
+type LogEntry = 
+ record {
+   at: Time;
+   balanceDelta: int;
+   behaviorId: opt BehaviorId;
+   childId: ChildId;
+   createdAt: Time;
+   createdBy: principal;
+   day: int;
+   emoji: opt text;
+   familyId: FamilyId;
+   id: LogId;
+   kind: LogKind;
+   note: opt text;
+   points: int;
+   title: text;
+   xpDelta: nat;
+ };
+type Level = 
+ record {
+   minXp: nat;
+   number: nat;
+   title: text;
+ };
+type Language = 
+ variant {
+   en;
+   sv;
+ };
+type InviteView = 
+ record {
+   expiresAt: Time;
+   token: text;
+ };
+type ImageChange = 
+ variant {
+   keep;
+   remove;
+   set: blob;
+ };
+type HistoryPage = 
+ record {
+   entries: vec LogEntry;
+   nextCursor: opt LogId;
+ };
+type HistoryFilter = 
+ record {
+   childId: opt ChildId;
+   fromDay: opt int;
+   kind: opt LogKind;
+   toDay: opt int;
+ };
+type FamilyView = 
+ record {
+   createdAt: Time;
+   hasPin: bool;
+   id: FamilyId;
+   name: text;
+   owner: principal;
+   settings: Settings;
+ };
+type FamilyId = nat;
+type Error = 
+ variant {
+   alreadyExists;
+   invalid: text;
+   notAuthorized;
+   notFound;
+   rateLimited: record {retryAfterNs: nat;};
+ };
+type Deletion = 
+ record {
+   at: Time;
+   id: nat;
+   kind: DeletedKind;
+ };
+type DeletedKind = 
+ variant {
+   behavior;
+   child;
+   entry;
+   reward;
+ };
+type Decision = 
+ record {
+   log: opt LogResult;
+   request: RewardRequest;
+ };
+type ChildView = 
+ record {
+   age: nat;
+   avatar: Avatar;
+   balance: nat;
+   createdAt: Time;
+   dailyGoal: nat;
+   familyId: FamilyId;
+   favoriteColor: text;
+   hasPicture: bool;
+   id: ChildId;
+   level: Level;
+   name: text;
+   nextLevelXp: opt nat;
+   savingForRewardId: opt nat;
+   streak: nat;
+   todayPoints: nat;
+   updatedAt: Time;
+   xp: nat;
+ };
+type ChildStats = 
+ record {
+   buckets: vec Bucket;
+   childId: ChildId;
+   earned: nat;
+   fromDay: int;
+   goodCount: nat;
+   lost: nat;
+   oopsCount: nat;
+   range: Range;
+   refunded: nat;
+   spent: nat;
+   toDay: int;
+   topBehaviors: vec BehaviorCount;
+ };
+type ChildInput = 
+ record {
+   age: nat;
+   avatar: Avatar;
+   dailyGoal: opt nat;
+   favoriteColor: text;
+   name: text;
+ };
+type ChildId = nat;
+type ChildBadge = 
+ record {
+   badgeId: BadgeId;
+   childId: ChildId;
+   unlockedAt: Time;
+ };
+type Changes = 
+ record {
+   badges: vec ChildBadge;
+   behaviors: vec Behavior;
+   children: vec ChildView;
+   complete: bool;
+   deleted: vec Deletion;
+   entries: vec LogEntry;
+   missions: vec MissionTask;
+   requests: vec RewardRequest;
+   rewards: vec Reward;
+   serverTime: Time;
+ };
+type Bucket = 
+ record {
+   days: nat;
+   earned: nat;
+   lost: nat;
+   startDay: int;
+ };
+type BehaviorKind = 
+ variant {
+   good;
+   oops;
+ };
+type BehaviorInput = 
+ record {
+   assignedTo: opt vec ChildId;
+   emoji: text;
+   kind: BehaviorKind;
+   mission: opt Mission;
+   name: text;
+   points: nat;
+ };
+type BehaviorId = nat;
+type BehaviorCount = 
+ record {
+   behaviorId: BehaviorId;
+   count: nat;
+   emoji: opt text;
+   kind: BehaviorKind;
+   title: text;
+ };
+type Behavior = 
+ record {
+   assignedTo: opt vec ChildId;
+   createdAt: Time;
+   emoji: text;
+   enabled: bool;
+   familyId: FamilyId;
+   id: BehaviorId;
+   kind: BehaviorKind;
+   mission: opt Mission;
+   name: text;
+   points: nat;
+   starterKey: opt text;
+   updatedAt: Time;
+ };
+type BadgeId = text;
+type Badge = 
+ record {
+   description: text;
+   emoji: text;
+   id: BadgeId;
+   name: text;
+ };
+type AvatarSlot = 
+ variant {
+   background;
+   glasses;
+   hat;
+ };
+type AvatarItemView = 
+ record {
+   id: text;
+   slot: AvatarSlot;
+   unlock: Unlock;
+   unlocked: bool;
+ };
+type Avatar = 
+ record {
+   accessories: vec text;
+   character: text;
+ };
+type AnimationLevel = 
+ variant {
+   full;
+   reduced;
+ };
+type Animal = 
+ variant {
+   bear;
+   cat;
+   dog;
+   fox;
+   frog;
+   lion;
+   monkey;
+   owl;
+   panda;
+   penguin;
+   rabbit;
+   unicorn;
+ };
+service : {
+  acceptInvite: (token: text) -> (Result_20);
+  addBehavior: (input: BehaviorInput) -> (Result_4);
+  addChild: (input: ChildInput) -> (Result_3);
+  addReward: (input: RewardInput) -> (Result_2);
+  cancelMission: (id: MissionId) -> (Result_1);
+  clearPicturePassword: (childId: ChildId) -> (Result_1);
+  confirmMission: (id: MissionId) -> (Result_8);
+  createFamily: (name: text, tzOffsetMinutes: int) -> (Result_20);
+  createInvite: () -> (Result_26);
+  createPairingCode: (childId: ChildId) -> (Result_25);
+  decideRequest: (id: RequestId, approve: bool) -> (Result_24);
+  deleteBehavior: (id: BehaviorId) -> (Result_1);
+  deleteChild: (id: ChildId) -> (Result_1);
+  deleteLogEntry: (id: LogId) -> (Result_3);
+  deleteReward: (id: RewardId) -> (Result_1);
+  enableStarterBehaviors: (keys: vec text) -> (Result_15);
+  getBadgeDefinitions: () -> (vec Badge) query;
+  getChangesSince: (since: Time) -> (Result_23) query;
+  getChild: (id: ChildId) -> (Result_3) query;
+  getChildStats: (childId: ChildId, range: Range) -> (Result_22) query;
+  getHistory: (filter: HistoryFilter, cursor: opt LogId, limit: nat) ->
+   (Result_21) query;
+  getLevels: () -> (vec Level) query;
+  getMyFamily: () -> (Result_20) query;
+  getMyRole: () -> (Role) query;
+  getRewardImage: (id: RewardId) -> (Result_19) query;
+  getWeeklySummary: (childId: ChildId) -> (Result_18) query;
+  heartbeat: () -> (Result_1);
+  listActiveMissions: () -> (Result_17) query;
+  listAvatarItems: (childId: ChildId) -> (Result_16) query;
+  listBehaviors: () -> (Result_15) query;
+  listChildBadges: (childId: ChildId) -> (Result_14) query;
+  listChildren: () -> (Result_13) query;
+  listDevices: () -> (Result_12) query;
+  listParents: () -> (Result_11) query;
+  listPendingRequests: () -> (Result_10) query;
+  listRewards: () -> (Result_9) query;
+  listStarterBehaviors: () -> (vec StarterBehavior) query;
+  logBehavior: (childId: ChildId, behaviorId: BehaviorId, note: opt text, at:
+   opt Time) -> (Result_8);
+  logCustom: (childId: ChildId, points: int, reason: text, at: opt Time) ->
+   (Result_8);
+  redeemPairingCode: (code: text, deviceName: text) -> (Result_7);
+  removeParent: ("principal": principal) -> (Result_1);
+  renameFamily: (name: text) -> (Result_1);
+  requestReward: (childId: ChildId, rewardId: RewardId) -> (Result_6);
+  resetPoints: (childId: ChildId) -> (Result_3);
+  revokeDevice: ("principal": principal) -> (Result_1);
+  revokeInvite: (token: text) -> (Result_1);
+  setAvatar: (childId: ChildId, avatar: Avatar) -> (Result_3);
+  setBehaviorEnabled: (id: BehaviorId, enabled: bool) -> (Result_1);
+  setParentPin: (newPin: text, currentPin: opt text) -> (Result_1);
+  setPicturePassword: (childId: ChildId, animals: vec Animal) -> (Result_1);
+  setRewardEnabled: (id: RewardId, enabled: bool) -> (Result_1);
+  setSavingGoal: (childId: ChildId, rewardId: opt RewardId) -> (Result_3);
+  startMission: (oopsEntryId: LogId) -> (Result_5);
+  updateBehavior: (id: BehaviorId, input: BehaviorInput) -> (Result_4);
+  updateChild: (id: ChildId, input: ChildInput) -> (Result_3);
+  updateReward: (id: RewardId, input: RewardInput) -> (Result_2);
+  updateSettings: (settings: Settings) -> (Result_1);
+  verifyParentPin: (pin: text) -> (Result);
+  verifyPicturePassword: (childId: ChildId, animals: vec Animal) -> (Result);
+  whoami: () -> (principal) query;
+}

@@ -1,0 +1,10 @@
+node_modules/
+.icp/cache/
+.mops/
+deployed/
+build/
+.react-router/
+canisters/frontend/app/bindings/
+*.log
+.env
+.env.*

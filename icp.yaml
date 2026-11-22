@@ -1,0 +1,6 @@
+canisters:
+  - canisters/*
+
+networks:
+  - name: local
+    mode: managed
