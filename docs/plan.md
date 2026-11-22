@@ -29,7 +29,7 @@ Status legend: `⬜ Not started` · `🟡 In progress` · `✅ Done` · `⛔ Blo
 | 10 | Reports, history, certificates, settings | ✅ Done | 7 |
 | 11 | Avatars, customization, Lottie & sound assets | ✅ Done | 8 |
 | 12 | Polish: optimistic UI, a11y, reduced motion, perf, tests | ✅ Done | 9, 10, 11 |
-| 13 | Mainnet deployment | ⬜ Not started | 12 |
+| 13 | Mainnet deployment | 🟡 In progress | 12 |
 
 ---
 
@@ -455,7 +455,7 @@ Session notes:
 ---
 
 ## Phase 13 — Mainnet deployment
-**Status:** ⬜ Not started
+**Status:** 🟡 In progress (deployed 2026-11-22; smoke test and second controller pending)
 **Skills:** `icp-cli`, `cycles-management` (or `buy-cycles`), `user-sign-in` (primary origin), `custom-domains` (optional), `icp-deploy-check` (its checklist is Rust-focused; apply the same five checks to Motoko)
 **Touches:** `icp.yaml`, `.icp/data/`
 
@@ -474,3 +474,9 @@ Acceptance
 - App live on `https://<frontend-id>.icp0.io`, a new family can start in under a minute, data survives a re-deploy.
 
 Session notes:
+- 2026-11-22: primary origin is `https://mr7nz-giaaa-aaaae-ahgvq-cai.icp0.io` (no custom domain). Backend `mw6ln-lqaaa-aaaae-ahgva-cai`, frontend `mr7nz-giaaa-aaaae-ahgvq-cai`; IDs in `.icp/data/mappings/ic.ids.json`.
+- Created with `--cycles 0.8t` each at the user's request (0.5T is the creation fee). That left too little for the 30-day freezing reserve, so install failed until each canister got a 0.1T top-up. prod-identity balance after: about 11.1T.
+- Deploy the frontend with `ICP_ENVIRONMENT=ic icp deploy ...`, not `-e ic`: the build reads the variable to drop localhost from the CSP. Verified the served `connect-src` has no localhost.
+- `icp` (Rust) needs `SSL_CERT_FILE=~/.local/share/certs/volvo-got-fw-rootca-2026-10.pem` behind the TLS proxy.
+- A sync right after an upgrade can hit "canister is stopped"; rerunning the deploy fixes it.
+- Second controller skipped for now (user's choice). Still to do: smoke test (II login, onboarding, phone pairing, iOS PWA install).
