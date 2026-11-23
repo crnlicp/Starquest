@@ -3,9 +3,9 @@ import "@fontsource/nunito/700.css";
 import "@fontsource/nunito/900.css";
 import "./app.css";
 import "./i18n";
-import { AnimatePresence, MotionConfig, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Links, Meta, Scripts, ScrollRestoration, useLocation, useOutlet } from "react-router";
+import { MotionConfig, motion } from "framer-motion";
+import { useEffect } from "react";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "react-router";
 import { AuthProvider } from "./lib/auth";
 import { FamilyProvider } from "./lib/family";
 import { KidProvider } from "./lib/kid";
@@ -42,30 +42,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Keeps the leaving page's content while it animates out.
-function AnimatedOutlet() {
-  const outlet = useOutlet();
-  const [frozen] = useState(outlet);
-  return frozen;
-}
-
+// Enter-only: an exit animation under AnimatePresence mode="wait" could leave the page blank
+// when navigating again (back/forward, redirects) before the old page finished leaving.
 function Shell() {
   const location = useLocation();
   const level = useMotionLevel();
   return (
     <MotionConfig reducedMotion={level === "reduced" ? "always" : "never"}>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={location.pathname}
-          className="page"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -60 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
-          <AnimatedOutlet />
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        key={location.pathname}
+        className="page"
+        initial={{ opacity: 0, x: 60 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <Outlet />
+      </motion.div>
     </MotionConfig>
   );
 }
